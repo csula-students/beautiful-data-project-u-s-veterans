@@ -2,10 +2,10 @@
 
 ## Team Members
 
-*Michael Holloway
-*Jordan Ton
-*Kevin Thai
+* Michael Holloway
+* Jordan Ton
+* Kevin Thai
 
 ### Homework Submissions
 
-*Homework-2 : committed and pull request created
+* Homework-2 : committed and pull request created
