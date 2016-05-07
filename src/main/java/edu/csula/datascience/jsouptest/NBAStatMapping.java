@@ -35,11 +35,15 @@ public class NBAStatMapping {
 	public static final String TURNOVERS = "turnovers";
 	public static final String FOULS = "fouls";
 	public static final String DEF_PTS_PER_GAME = "def_points_per_game";
-	public static final String DEF_FG_PERCENTAGE = "def_field_goal_percentage";
 	public static final String PT_DIFF = "point_difference";
+	public static final String DEF_FG_PERCENTAGE = "def_field_goal_percentage";
+	public static final String OFF_REBOUNDS_PERCENTAGE = "offensive_rebounds_percentage";
+	public static final String DEF_REBOUNDS_PERCENTAGE = "defensive_rebounds_percentage";
+	public static final String TOTAL_REBOUNDS_PERCENTAGE = "total_rebounds_percentage";
 	public static final String DEF_THREE_PT_PERCENTAGE = "def_three_points_percentage";
 	public static final String DEF_TURNOVERS = "def_turnovers";
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public NBAStatMapping() {
 		mapping = new HashMap();
 	}

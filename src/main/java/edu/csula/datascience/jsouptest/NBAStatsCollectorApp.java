@@ -1,14 +1,8 @@
 package edu.csula.datascience.jsouptest;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class NBAStatsCollectorApp {
 
@@ -33,15 +27,6 @@ public class NBAStatsCollectorApp {
 				ex.printStackTrace();
 			}
 		}
-
-		// to test list of objects us the code below:
-		// System.out.println("regular season arraylist: " +
-		// regularSeasonStats.size());
-		//
-		// for (int i = 0; i < regularSeasonStats.size(); i++) {
-		// System.out.print(regularSeasonStats.get(i).getField_goal_percentage()
-		// + "\n");
-		// }
 	}
 
 	public static List<NBAPageSource> initSources() {
@@ -104,7 +89,7 @@ public class NBAStatsCollectorApp {
 			list.add(de_source);
 		}
 
-		// ESPN
+		// ESPN (1999 - 2015)
 		startYear = 1999;
 		endYear = 2015;
 		String espn_url = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2015/seasontype/2";
@@ -118,9 +103,9 @@ public class NBAStatsCollectorApp {
 		espn_mapping.addMapping(7, NBAStatMapping.THREE_PT_PERCENTAGE);
 		espn_mapping.addMapping(8, NBAStatMapping.DEF_THREE_PT_PERCENTAGE);
 		espn_mapping.addMapping(9, NBAStatMapping.FT_PERCENTAGE);
-		espn_mapping.addMapping(10, NBAStatMapping.OFF_REBOUNDS);
-		espn_mapping.addMapping(11, NBAStatMapping.DEF_REBOUNDS);
-		espn_mapping.addMapping(12, NBAStatMapping.TOTAL_REBOUNDS);
+		espn_mapping.addMapping(10, NBAStatMapping.OFF_REBOUNDS_PERCENTAGE);
+		espn_mapping.addMapping(11, NBAStatMapping.DEF_REBOUNDS_PERCENTAGE);
+		espn_mapping.addMapping(12, NBAStatMapping.TOTAL_REBOUNDS_PERCENTAGE);
 		espn_mapping.addMapping(13, NBAStatMapping.TURNOVERS);
 		espn_mapping.addMapping(14, NBAStatMapping.DEF_TURNOVERS);
 

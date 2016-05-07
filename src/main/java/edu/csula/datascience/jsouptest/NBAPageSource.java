@@ -5,7 +5,6 @@ import edu.csula.datascience.jsouptest.NBAStatMapping;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
@@ -58,7 +57,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 	@Override
 	public Collection<BasketballObject> next() {
 		Collection<BasketballObject> stats = new ArrayList<BasketballObject>();
-		Elements rows = doc.getElementsByTag("tr").not("tr.colhead, tr.footer").not("thead > tr");
+		rows = doc.getElementsByTag("tr").not("tr.colhead, tr.footer").not("thead > tr");
 
 		for (Element row : rows) {
 			Elements tds = row.getElementsByTag("td");
@@ -87,9 +86,12 @@ public class NBAPageSource implements Source<BasketballObject> {
 			Double turnovers = 0.0;
 			Double fouls = 0.0;
 			Double def_points_per_game = 0.0;
-			Double def_field_goal_percentage = 0.0;
 			Double point_difference = 0.0;
+			Double def_field_goal_percentage = 0.0;			
 			Double def_three_points_percentage = 0.0;
+			Double off_rebounds_percentage = 0.0;
+			Double def_rebounds_percentage = 0.0;
+			Double total_rebounds_percentage = 0.0;
 			Double def_turnovers = 0.0;
 
 			for (Entry<Integer, String> stat : mapping.entrySet()) {
@@ -236,16 +238,16 @@ public class NBAPageSource implements Source<BasketballObject> {
 							//System.out.println("def_points_per_game: " + def_points_per_game);
 						}catch(Exception ex){}
 						break;
-					case NBAStatMapping.DEF_FG_PERCENTAGE:
-						try{
-							def_field_goal_percentage = Double.parseDouble(tds.get(stat.getKey()).text());
-							//System.out.println("def_field_goal_percentage: " + def_field_goal_percentage);
-						}catch(Exception ex){}
-						break;
 					case NBAStatMapping.PT_DIFF:
 						try{
 							point_difference = Double.parseDouble(tds.get(stat.getKey()).text());
 							//System.out.println("point_difference: " + point_difference);
+						}catch(Exception ex){}
+						break;	
+					case NBAStatMapping.DEF_FG_PERCENTAGE:
+						try{
+							def_field_goal_percentage = Double.parseDouble(tds.get(stat.getKey()).text());
+							//System.out.println("def_field_goal_percentage: " + def_field_goal_percentage);
 						}catch(Exception ex){}
 						break;
 					case NBAStatMapping.DEF_THREE_PT_PERCENTAGE:
@@ -254,6 +256,24 @@ public class NBAPageSource implements Source<BasketballObject> {
 							//System.out.println("def_three_points_percentage: " + def_three_points_percentage);
 						}catch(Exception ex){}
 						break;
+					case NBAStatMapping.OFF_REBOUNDS_PERCENTAGE:
+						try{
+							off_rebounds_percentage = Double.parseDouble(tds.get(stat.getKey()).text());
+							//System.out.println("off_rebounds_percentage: " + off_rebounds_percentage);
+						}catch(Exception ex){}
+						break;
+					case NBAStatMapping.DEF_REBOUNDS_PERCENTAGE:
+						try{
+							def_rebounds_percentage = Double.parseDouble(tds.get(stat.getKey()).text());
+							//System.out.println("def_rebounds_percentage: " + def_rebounds_percentage);
+						}catch(Exception ex){}
+						break;
+					case NBAStatMapping.TOTAL_REBOUNDS_PERCENTAGE:
+						try{
+							total_rebounds_percentage = Double.parseDouble(tds.get(stat.getKey()).text());
+							//System.out.println("total_rebounds_percentage: " + total_rebounds_percentage);
+						}catch(Exception ex){}
+						break;	
 					case NBAStatMapping.DEF_TURNOVERS:
 						try{
 							def_turnovers = Double.parseDouble(tds.get(stat.getKey()).text());
@@ -284,9 +304,10 @@ public class NBAPageSource implements Source<BasketballObject> {
 						off_rebounds, def_rebounds,
 						total_rebounds, assists, steals,
 						blocks, turnovers, fouls,
-						def_points_per_game, def_field_goal_percentage,
-						point_difference, def_three_points_percentage,
-						def_turnovers);
+						def_points_per_game, point_difference,
+						def_field_goal_percentage, def_three_points_percentage,
+						off_rebounds_percentage, def_rebounds_percentage, 
+						total_rebounds_percentage, def_turnovers);
 				stats.add(newObj);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
