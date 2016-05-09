@@ -52,7 +52,7 @@ public class NBAStatsCollectorApp {
 		NBAPageSource cbssports_source = new NBAPageSource(cbs_url, cbs_year, cbs_mapping);
 
 		list.add(cbssports_source);
-
+				
 		// Draft Express (1979-2016)
 		Integer startYear = 1979;
 		Integer endYear = 2016;
@@ -89,10 +89,10 @@ public class NBAStatsCollectorApp {
 			list.add(de_source);
 		}
 
-		// ESPN (1999 - 2015)
+		// ESPN (1999 - 2016)
 		startYear = 1999;
-		endYear = 2015;
-		String espn_url = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2015/seasontype/2";
+		endYear = 2016;
+		String espn_url = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2016/seasontype/2";
 		NBAStatMapping espn_mapping = new NBAStatMapping();
 		espn_mapping.addMapping(1, NBAStatMapping.TEAM);
 		espn_mapping.addMapping(2, NBAStatMapping.PTS_PER_GAME);
@@ -114,6 +114,52 @@ public class NBAStatsCollectorApp {
 			//System.out.println(year_url);
 			NBAPageSource espn_source = new NBAPageSource(year_url, i, espn_mapping);
 			list.add(espn_source);
+		}
+		
+		// CBS Sports Postseason
+		String cbs_url_post = "http://www.cbssports.com/nba/stats/teamsort/NBA/year-2015-season-postseason-category-scoringpergame-type-team";
+		NBAStatMapping cbs_mapping_post = new NBAStatMapping();
+		cbs_mapping_post.addMapping(0, NBAStatMapping.TEAM);
+		cbs_mapping_post.addMapping(1, NBAStatMapping.GAMES_PLAYED);
+		cbs_mapping_post.addMapping(2, NBAStatMapping.PTS_PER_GAME);
+		cbs_mapping_post.addMapping(3, NBAStatMapping.FG_MADE);
+		cbs_mapping_post.addMapping(4, NBAStatMapping.FG_ATTEMPTED);
+		cbs_mapping_post.addMapping(5, NBAStatMapping.FG_PERCENTAGE);
+		cbs_mapping_post.addMapping(6, NBAStatMapping.THREE_PT_MADE);
+		cbs_mapping_post.addMapping(7, NBAStatMapping.THREE_PT_ATTEMPTED);
+		cbs_mapping_post.addMapping(8, NBAStatMapping.THREE_PT_PERCENTAGE);
+		cbs_mapping_post.addMapping(9, NBAStatMapping.FT_MADE);
+		cbs_mapping_post.addMapping(10, NBAStatMapping.FT_ATTEMPTED);
+		cbs_mapping_post.addMapping(11, NBAStatMapping.FT_PERCENTAGE);
+		NBAPageSource cbssports_source_post = new NBAPageSource(cbs_url_post, cbs_year, cbs_mapping_post);
+
+		list.add(cbssports_source_post);
+		
+		// ESPN (1999 - 2016) Postseason
+		startYear = 2000;
+		endYear = 2016;
+		String espn_url_post = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2016";
+		NBAStatMapping espn_mapping_post = new NBAStatMapping();
+		espn_mapping_post.addMapping(1, NBAStatMapping.TEAM);
+		espn_mapping_post.addMapping(2, NBAStatMapping.PTS_PER_GAME);
+		espn_mapping_post.addMapping(3, NBAStatMapping.DEF_PTS_PER_GAME);
+		espn_mapping_post.addMapping(4, NBAStatMapping.PT_DIFF);
+		espn_mapping_post.addMapping(5, NBAStatMapping.FG_PERCENTAGE);
+		espn_mapping_post.addMapping(6, NBAStatMapping.DEF_FG_PERCENTAGE);
+		espn_mapping_post.addMapping(7, NBAStatMapping.THREE_PT_PERCENTAGE);
+		espn_mapping_post.addMapping(8, NBAStatMapping.DEF_THREE_PT_PERCENTAGE);
+		espn_mapping_post.addMapping(9, NBAStatMapping.FT_PERCENTAGE);
+		espn_mapping_post.addMapping(10, NBAStatMapping.OFF_REBOUNDS_PERCENTAGE);
+		espn_mapping_post.addMapping(11, NBAStatMapping.DEF_REBOUNDS_PERCENTAGE);
+		espn_mapping_post.addMapping(12, NBAStatMapping.TOTAL_REBOUNDS_PERCENTAGE);
+		espn_mapping_post.addMapping(13, NBAStatMapping.TURNOVERS);
+		espn_mapping_post.addMapping(14, NBAStatMapping.DEF_TURNOVERS);
+
+		for (int i = endYear; i >= startYear; i--) {
+			String year_url = espn_url_post.replaceAll("year/\\d\\d\\d\\d", "year/" + i);
+			//System.out.println(year_url);
+			NBAPageSource espn_source_post = new NBAPageSource(year_url, i, espn_mapping_post);
+			list.add(espn_source_post);
 		}
 
 		System.out.println("Sources initialized.");
