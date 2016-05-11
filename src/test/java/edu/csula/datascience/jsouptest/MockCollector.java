@@ -1,7 +1,7 @@
 package edu.csula.datascience.jsouptest;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 /**
  * A mock implementation of collector for testing
