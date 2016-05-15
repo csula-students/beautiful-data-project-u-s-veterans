@@ -4,6 +4,7 @@ public class BasketballObject {
 	
 	private String team;
 	private Integer year;
+	private boolean postseason;
 	private double games_played;
 	private double points_per_game;
 	private double field_goal_made;
@@ -38,7 +39,7 @@ public class BasketballObject {
 	public BasketballObject() {
 	}
 	
-	public BasketballObject(String team, Integer year, double games_played,
+	public BasketballObject(String team, Integer year, boolean postseason, double games_played,
 			double points_per_game, double field_goal_made,
 			double field_goal_attempted, double field_goal_percentage,
 			double two_points_made, double two_points_attempted, double two_points_percentage,
@@ -55,6 +56,7 @@ public class BasketballObject {
 		
 		this.team = team;
 		this.year = year;
+		this.postseason = postseason;
 		this.games_played = games_played;
 		this.points_per_game = points_per_game;
 		this.field_goal_made = field_goal_made;
@@ -102,6 +104,15 @@ public class BasketballObject {
 	
 	public void setYear(Integer year){
 		this.year = year;
+	}
+	
+	public boolean getPostseason()
+	{
+		return postseason;
+	}
+	
+	public void setPostseason(boolean postseason){
+		this.postseason = postseason;
 	}
 	
 	public double getGames_played() {

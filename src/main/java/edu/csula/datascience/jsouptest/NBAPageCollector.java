@@ -21,6 +21,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 		database = mongoClient.getDatabase("datascience");
 
 		collection = database.getCollection("nbastats");
+		collection.drop();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 	@Override
 	public void save(Collection<BasketballObject> data) {
 		List<Document> documents = data.stream()
-				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam()).append("year", item.getYear())
+				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam()).append("year", item.getYear()).append("postseason", item.getPostseason())
 						.append(NBAStatMapping.GAMES_PLAYED, item.getGames_played())
 						.append(NBAStatMapping.PTS_PER_GAME, item.getPoints_per_game())
 						.append(NBAStatMapping.DEF_PTS_PER_GAME, item.getDef_points_per_game())
