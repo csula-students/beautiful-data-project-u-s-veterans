@@ -19,7 +19,7 @@ public class MockSource implements Source<BasketballObject> {
     public Collection<BasketballObject> next() {
         return Lists.newArrayList(
             new BasketballObject(),
-            new BasketballObject("Golden St", 2016, 82,
+            new BasketballObject("Golden St", 2016, false, 82,
             103.4, 0.0,
             0.0,0.0,0.0,
             0.0,0.0,0.0,
@@ -31,7 +31,7 @@ public class MockSource implements Source<BasketballObject> {
             0.0,0.0,0.0,
             0.0,0.0,
             0.0,0.0,0.0,0.0,0.0),
-            new BasketballObject("Golden St", 2016, 82, 
+            new BasketballObject("Golden St", 2016, false, 82, 
                 103.4, 0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
@@ -43,7 +43,7 @@ public class MockSource implements Source<BasketballObject> {
                 0.0,0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,0.0),
-            new BasketballObject("Miami", 2016, 82,
+            new BasketballObject("Miami", 2016, false, 82,
                 101.4, 0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
