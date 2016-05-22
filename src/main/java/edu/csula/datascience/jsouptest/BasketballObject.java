@@ -35,6 +35,8 @@ public class BasketballObject {
 	private double defensive_rebounds_percentage;
 	private double total_rebounds_percentage;	
 	private double def_turnovers;
+	private String name;
+	private double minutes_played;
 	
 	public BasketballObject() {
 	}
@@ -86,8 +88,48 @@ public class BasketballObject {
 		this.offensive_rebounds_percentage = offensive_rebounds_percentage;
 		this.defensive_rebounds_percentage = defensive_rebounds_percentage;
 		this.total_rebounds_percentage = total_rebounds_percentage; 
-		this.def_turnovers = def_turnovers;
+		this.def_turnovers = def_turnovers;		
+	}
+	
+	public BasketballObject(String name, String team, Integer year, boolean postseason, 
+			double games_played, double minutes_played, double points_per_game, 
+			double field_goal_made, double field_goal_attempted, 
+			double field_goal_percentage, double two_points_made, 
+			double two_points_attempted, double two_points_percentage, 
+			double three_points_made, double three_points_attempted,
+			double three_points_percentage, double free_throws_made,
+			double free_throws_attempted, double free_throws_percentage, 
+			double offensive_rebounds, double defensive_rebounds,
+			double total_rebounds, double assists, double steals, double blocks, 
+			double turnovers, double fouls) {
 		
+		this.name = name;
+		this.team = team;
+		this.year = year;
+		this.postseason = postseason;
+		this.games_played = games_played;
+		this.minutes_played = minutes_played;
+		this.points_per_game = points_per_game;
+		this.field_goal_made = field_goal_made;
+		this.field_goal_attempted = field_goal_attempted;
+		this.field_goal_percentage = field_goal_percentage;
+		this.two_points_made = two_points_made;
+		this.two_points_attempted = two_points_attempted;
+		this.two_points_percentage = two_points_percentage;
+		this.three_points_made = three_points_made;
+		this.three_points_attempted = three_points_attempted;
+		this.three_points_percentage = three_points_percentage;
+		this.free_throws_made = free_throws_made;
+		this.free_throws_attempted = free_throws_attempted;
+		this.free_throws_percentage = free_throws_percentage;
+		this.offensive_rebounds = offensive_rebounds;
+		this.defensive_rebounds = defensive_rebounds;
+		this.total_rebounds = total_rebounds;
+		this.assists = assists;
+		this.steals = steals;
+		this.blocks = blocks;
+		this.turnovers = turnovers;
+		this.fouls = fouls;
 	}
 		
 	public String getTeam() {
@@ -354,4 +396,21 @@ public class BasketballObject {
 	public double getDef_turnovers(){
 		return def_turnovers;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getMinutes_played() {
+		return minutes_played;
+	}
+
+	public void setMinutes_played(double minutes_played) {
+		this.minutes_played = minutes_played;
+	}
+	
 }

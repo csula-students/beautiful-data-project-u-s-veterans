@@ -227,6 +227,44 @@ public class NBAStatsCollectorApp {
 			NBAPageSource yahoo_source_post = new NBAPageSource(year_url, j, true, yahoo_mapping_post, "tr[class^=ysprow]");
 			list.add(yahoo_source_post);
 		}
+		
+		// Draft Express Players' Stats(1979-2016)
+		startYear = 1979;
+		endYear = 2016;
+		String draftExpress_players_url = "http://www.draftexpress.com/stats.php?sort=&q=&league=NBA&year=2016&per=pergame&min=All&pos=all&qual=prospects";
+		NBAStatMapping draftExpress_players_mapping = new NBAStatMapping();
+		draftExpress_players_mapping.addMapping(1, NBAStatMapping.NAME);
+		draftExpress_players_mapping.addMapping(2, NBAStatMapping.TEAM);
+		draftExpress_players_mapping.addMapping(3, NBAStatMapping.GAMES_PLAYED);
+		draftExpress_players_mapping.addMapping(4, NBAStatMapping.MIN_PLAYED);
+		draftExpress_players_mapping.addMapping(5, NBAStatMapping.PTS_PER_GAME);
+		draftExpress_players_mapping.addMapping(6, NBAStatMapping.FG_MADE);
+		draftExpress_players_mapping.addMapping(7, NBAStatMapping.FG_ATTEMPTED);
+		draftExpress_players_mapping.addMapping(8, NBAStatMapping.FG_PERCENTAGE);
+		draftExpress_players_mapping.addMapping(9, NBAStatMapping.TWO_PT_MADE);
+		draftExpress_players_mapping.addMapping(10, NBAStatMapping.TWO_PT_ATTEMPTED);
+		draftExpress_players_mapping.addMapping(11, NBAStatMapping.TWO_PT_PERCENTAGE);
+		draftExpress_players_mapping.addMapping(12, NBAStatMapping.THREE_PT_MADE);
+		draftExpress_players_mapping.addMapping(13, NBAStatMapping.THREE_PT_ATTEMPTED);
+		draftExpress_players_mapping.addMapping(14, NBAStatMapping.THREE_PT_PERCENTAGE);
+		draftExpress_players_mapping.addMapping(15, NBAStatMapping.FT_MADE);
+		draftExpress_players_mapping.addMapping(16, NBAStatMapping.FT_ATTEMPTED);
+		draftExpress_players_mapping.addMapping(17, NBAStatMapping.FT_PERCENTAGE);
+		draftExpress_players_mapping.addMapping(18, NBAStatMapping.OFF_REBOUNDS);
+		draftExpress_players_mapping.addMapping(19, NBAStatMapping.DEF_REBOUNDS);
+		draftExpress_players_mapping.addMapping(20, NBAStatMapping.TOTAL_REBOUNDS);
+		draftExpress_players_mapping.addMapping(21, NBAStatMapping.ASSISTS);
+		draftExpress_players_mapping.addMapping(22, NBAStatMapping.STEALS);
+		draftExpress_players_mapping.addMapping(23, NBAStatMapping.BLOCKS);
+		draftExpress_players_mapping.addMapping(24, NBAStatMapping.TURNOVERS);
+		draftExpress_players_mapping.addMapping(25, NBAStatMapping.FOULS);
+
+		for (int i = endYear; i >= startYear; i--) {
+			String year_url = draftExpress_players_url.replaceAll("year=\\d\\d\\d\\d", "year=" + i);
+			// System.out.println(year_url);
+			NBAPageSource draftExpress_source = new NBAPageSource(year_url, i, false, draftExpress_players_mapping, "tr");
+			list.add(draftExpress_source);
+		}
 
 		System.out.println("Sources initialized.");
 		

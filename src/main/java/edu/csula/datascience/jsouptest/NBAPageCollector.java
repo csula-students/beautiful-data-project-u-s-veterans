@@ -42,7 +42,17 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 					}
 					
 					if (!duplicate) {
-						System.out.println(stat.getTeam() + ": " + stat.getPoints_per_game());
+						
+						if (stat.getName() != null) {
+							
+							System.out.println(stat.getName() + " : " + stat.getTeam() + 
+									" : " + stat.getPoints_per_game());								
+						} else {
+							
+							System.out.println(stat.getTeam() + " : " + 
+									stat.getPoints_per_game());
+						}
+												
 						clean.add(stat);
 					}
 				}

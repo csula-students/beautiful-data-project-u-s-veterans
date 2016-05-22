@@ -108,6 +108,8 @@ public class NBAPageSource implements Source<BasketballObject> {
 			Double def_rebounds_percentage = 0.0;
 			Double total_rebounds_percentage = 0.0;
 			Double def_turnovers = 0.0;
+			String name = "";
+			Double minutes_played = 0.0;
 
 			for (Entry<Integer, String> stat : mapping.entrySet()) {
 				try {
@@ -295,6 +297,16 @@ public class NBAPageSource implements Source<BasketballObject> {
 							//System.out.println("def_turnovers: " + def_turnovers);
 						}catch(Exception ex){}
 						break;
+					case NBAStatMapping.NAME:
+						name = tds.get(stat.getKey()).text();
+						//System.out.println("name: " + name);
+						break;
+					case NBAStatMapping.MIN_PLAYED:
+						try{
+							minutes_played = Double.parseDouble(tds.get(stat.getKey()).text().replace("\u00a0", ""));
+							//System.out.println("minutes_played: " + minutes_played);
+						}catch(Exception ex){}
+						break;	
 					default:
 						// set field to 0.0
 						break;
@@ -309,21 +321,38 @@ public class NBAPageSource implements Source<BasketballObject> {
 			}
 
 			try {
-				BasketballObject newObj = new BasketballObject(team, year, postseason, games_played,
-						points_per_game, field_goal_made,
-						field_goal_attempted, field_goal_percentage,
-						two_pt_made, two_pt_attempted, two_pt_percentage,
-						three_points_made, three_points_attempted,
-						three_points_percentage, free_throws_made,
-						free_throws_attempted, free_throws_percentage,
-						off_rebounds, def_rebounds,
-						total_rebounds, assists, steals,
-						blocks, turnovers, fouls,
-						def_points_per_game, point_difference,
-						def_field_goal_percentage, def_three_points_percentage,
-						off_rebounds_percentage, def_rebounds_percentage, 
-						total_rebounds_percentage, def_turnovers);
-				stats.add(newObj);
+				
+				if (name.equalsIgnoreCase("")) {
+					
+					BasketballObject newObj = new BasketballObject(team, year, postseason, games_played,
+							points_per_game, field_goal_made,
+							field_goal_attempted, field_goal_percentage,
+							two_pt_made, two_pt_attempted, two_pt_percentage,
+							three_points_made, three_points_attempted,
+							three_points_percentage, free_throws_made,
+							free_throws_attempted, free_throws_percentage,
+							off_rebounds, def_rebounds,
+							total_rebounds, assists, steals,
+							blocks, turnovers, fouls,
+							def_points_per_game, point_difference,
+							def_field_goal_percentage, def_three_points_percentage,
+							off_rebounds_percentage, def_rebounds_percentage, 
+							total_rebounds_percentage, def_turnovers);
+					stats.add(newObj);
+				} else {
+					
+					BasketballObject newObj = new BasketballObject(name, team, year,
+							postseason, games_played, minutes_played, points_per_game, 
+							field_goal_made, field_goal_attempted, field_goal_percentage,
+							two_pt_made, two_pt_attempted, two_pt_percentage,
+							three_points_made, three_points_attempted, three_points_percentage,
+							free_throws_made, free_throws_attempted, free_throws_percentage,
+							off_rebounds, def_rebounds, total_rebounds, 
+							assists, steals, blocks, turnovers, fouls);
+					
+					stats.add(newObj);
+				}
+				
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}

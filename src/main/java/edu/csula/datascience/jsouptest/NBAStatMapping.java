@@ -42,6 +42,8 @@ public class NBAStatMapping {
 	public static final String TOTAL_REBOUNDS_PERCENTAGE = "total_rebounds_percentage";
 	public static final String DEF_THREE_PT_PERCENTAGE = "def_three_points_percentage";
 	public static final String DEF_TURNOVERS = "def_turnovers";
+	public static final String NAME = "name";
+	public static final String MIN_PLAYED = "minutes_played";
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public NBAStatMapping() {
