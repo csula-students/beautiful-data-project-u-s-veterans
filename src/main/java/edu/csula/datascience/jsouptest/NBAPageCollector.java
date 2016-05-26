@@ -26,6 +26,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 
 	@Override
 	public Collection<BasketballObject> mungee(Collection<BasketballObject> src) {
+		
 		Collection<BasketballObject> clean = new ArrayList<BasketballObject>();
 
 		for (BasketballObject stat : src) {
@@ -35,7 +36,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 					boolean duplicate = false;
 					
 					for (BasketballObject cStat : clean) {
-						if (stat.getTeam().contentEquals(cStat.getTeam())) {
+						if (stat.getTeam().contentEquals(cStat.getTeam()) && stat.getName().contentEquals("")) {
 							duplicate = true;
 							break;
 						}
@@ -67,6 +68,8 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 	public void save(Collection<BasketballObject> data) {
 		List<Document> documents = data.stream()
 				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam()).append("year", item.getYear()).append("postseason", item.getPostseason())
+						.append(NBAStatMapping.NAME, item.getName())
+						.append(NBAStatMapping.MIN_PLAYED, item.getMinutes_played())
 						.append(NBAStatMapping.GAMES_PLAYED, item.getGames_played())
 						.append(NBAStatMapping.PTS_PER_GAME, item.getPoints_per_game())
 						.append(NBAStatMapping.DEF_PTS_PER_GAME, item.getDef_points_per_game())
