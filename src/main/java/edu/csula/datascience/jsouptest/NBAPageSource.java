@@ -115,7 +115,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 				try {
 					switch (stat.getValue()) {
 					case NBAStatMapping.TEAM:
-						team = tds.get(stat.getKey()).text();
+						team = tds.get(stat.getKey()).text().replace("\u00a0", "");
 						//System.out.println("team: " + team);
 						break;
 					case NBAStatMapping.GAMES_PLAYED:
