@@ -19,9 +19,8 @@ public class NBAStatsCollectorApp extends TimerTask {
 		TimerTask timerTask = new NBAStatsCollectorApp();
 		// running timer task as daemon thread
 		Timer timer = new Timer(false);
-
+		timerTask.run();
 		getNextRun();
-		System.out.println("Executing first occurrence within 24 hours");
 		Date d = new Date(c.getTimeInMillis());
 		timer.scheduleAtFixedRate(timerTask, d, 1000 * 60 * 60 * 24);
 
