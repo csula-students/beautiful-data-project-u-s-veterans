@@ -1,4 +1,4 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;

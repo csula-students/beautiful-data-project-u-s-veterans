@@ -1,7 +1,10 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import edu.csula.datascience.nba.BasketballObject;
+import edu.csula.datascience.nba.Collector;
 
 /**
  * A mock implementation of collector for testing

@@ -1,6 +1,4 @@
-package edu.csula.datascience.jsouptest;
-
-import edu.csula.datascience.jsouptest.NBAStatMapping;
+package edu.csula.datascience.nba;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -11,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import edu.csula.datascience.nba.NBAStatMapping;
 
 public class NBAPageSource implements Source<BasketballObject> {
 

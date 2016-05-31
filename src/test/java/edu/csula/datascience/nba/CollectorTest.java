@@ -1,10 +1,14 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.csula.datascience.nba.BasketballObject;
+import edu.csula.datascience.nba.Collector;
+import edu.csula.datascience.nba.Source;
 
 /**
  * A test case to show how to use Collector and Source
