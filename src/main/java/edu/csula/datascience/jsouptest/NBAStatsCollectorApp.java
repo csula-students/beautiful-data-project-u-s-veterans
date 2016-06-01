@@ -55,6 +55,9 @@ public class NBAStatsCollectorApp extends TimerTask {
 					// save here once mongo is set up
 					collector.save(batch);
 				}
+				
+				// sleep for 2 seconds
+				Thread.sleep(2000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

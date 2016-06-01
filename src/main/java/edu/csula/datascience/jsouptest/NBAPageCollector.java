@@ -67,7 +67,11 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 	@Override
 	public void save(Collection<BasketballObject> data) {
 		List<Document> documents = data.stream()
-				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam()).append("year", item.getYear()).append("postseason", item.getPostseason())
+				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam())
+						.append("city", item.getCity())
+						.append("year", item.getYear())
+						.append("year_date", item.getYearDate())
+						.append("postseason", item.getPostseason())
 						.append(NBAStatMapping.NAME, item.getName())
 						.append(NBAStatMapping.MIN_PLAYED, item.getMinutes_played())
 						.append(NBAStatMapping.GAMES_PLAYED, item.getGames_played())
