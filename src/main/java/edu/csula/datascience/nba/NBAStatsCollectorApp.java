@@ -1,13 +1,44 @@
 package edu.csula.datascience.nba;
 
 import java.util.Collection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class NBAStatsCollectorApp {
+public class NBAStatsCollectorApp extends TimerTask {
+
+	public final SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+	public static final int hour_to_run = 6;
+	public static Calendar c = Calendar.getInstance();
 
 	public static void main(String[] args) {
+		TimerTask timerTask = new NBAStatsCollectorApp();
+		// running timer task as daemon thread
+		Timer timer = new Timer(false);
+		timerTask.run();
+		getNextRun();
+		Date d = new Date(c.getTimeInMillis());
+		timer.scheduleAtFixedRate(timerTask, d, 1000 * 60 * 60 * 24);
 
+	}
+
+	public static void getNextRun() {
+		c = Calendar.getInstance();
+		if (c.HOUR_OF_DAY >= hour_to_run) {
+			c.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		c.set(Calendar.HOUR_OF_DAY, hour_to_run);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+	}
+
+	@Override
+	public void run() {
+		System.out.println("Import running at " + f.format(new Date().getTime()));
 		List<NBAPageSource> sources = initSources();
 		List<BasketballObject> regularSeasonStats = new ArrayList<BasketballObject>();
 		NBAPageCollector collector = new NBAPageCollector();
@@ -19,14 +50,22 @@ public class NBAStatsCollectorApp {
 					Collection<BasketballObject> sourceCollection = source.next();
 					batch = collector.mungee(sourceCollection);
 					regularSeasonStats.addAll(batch);
-					System.out.println("Source (" + sourceCollection.size() + "): Batch(" + batch.size() + "); " + source.getUrl());
+					System.out.println("Source (" + sourceCollection.size() + "): Batch(" + batch.size() + "); "
+							+ source.getUrl());
 					// save here once mongo is set up
 					collector.save(batch);
 				}
+				
+				// sleep for 2 seconds
+				Thread.sleep(2000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
+		
+		System.out.println("Import completed at " + f.format(new Date().getTime()));
+		getNextRun();
+		System.out.println("The next run will be " + f.format(c.getTime()));
 	}
 
 	public static List<NBAPageSource> initSources() {
@@ -52,7 +91,7 @@ public class NBAStatsCollectorApp {
 		NBAPageSource cbssports_source = new NBAPageSource(cbs_url, cbs_year, false, cbs_mapping, "tr");
 
 		list.add(cbssports_source);
-				
+
 		// Draft Express (1979-2016)
 		Integer startYear = 1979;
 		Integer endYear = 2016;
@@ -111,12 +150,12 @@ public class NBAStatsCollectorApp {
 
 		for (int i = endYear; i >= startYear; i--) {
 			String year_url = espn_url.replaceAll("year/\\d\\d\\d\\d", "year/" + i);
-			//System.out.println(year_url);
+			// System.out.println(year_url);
 			NBAPageSource espn_source = new NBAPageSource(year_url, i, false, espn_mapping, "tr");
 			list.add(espn_source);
 		}
-		
-		//Yahoo Sports (2002 - 2015)
+
+		// Yahoo Sports (2002 - 2015)
 		startYear = 2002;
 		endYear = 2015;
 		String yahoo_url = "http://sports.yahoo.com/nba/stats/byteam?cat1=Total&cat2=team&sort=232&conference=NBA&year=season_2015";
@@ -143,12 +182,12 @@ public class NBAStatsCollectorApp {
 
 		for (int j = endYear; j >= startYear; j--) {
 			String year_url = yahoo_url.replaceAll("year=season_\\d\\d\\d\\d", "year=season_" + j);
-			//System.out.println(year_url);
-			
+			// System.out.println(year_url);
+
 			NBAPageSource yahoo_source = new NBAPageSource(year_url, j, false, yahoo_mapping, "tr[class^=ysprow]");
 			list.add(yahoo_source);
 		}
-		
+
 		// CBS Sports Postseason
 		String cbs_url_post = "http://www.cbssports.com/nba/stats/teamsort/NBA/year-2015-season-postseason-category-scoringpergame-type-team";
 		NBAStatMapping cbs_mapping_post = new NBAStatMapping();
@@ -167,8 +206,8 @@ public class NBAStatsCollectorApp {
 		NBAPageSource cbssports_source_post = new NBAPageSource(cbs_url_post, cbs_year, true, cbs_mapping_post, "tr");
 
 		list.add(cbssports_source_post);
-		
-		// ESPN Postseason (1999 - 2016) 
+
+		// ESPN Postseason (1999 - 2016)
 		startYear = 2000;
 		endYear = 2016;
 		String espn_url_post = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2016";
@@ -190,12 +229,12 @@ public class NBAStatsCollectorApp {
 
 		for (int i = endYear; i >= startYear; i--) {
 			String year_url = espn_url_post.replaceAll("year/\\d\\d\\d\\d", "year/" + i);
-			//System.out.println(year_url);
+			// System.out.println(year_url);
 			NBAPageSource espn_source_post = new NBAPageSource(year_url, i, true, espn_mapping_post, "tr");
 			list.add(espn_source_post);
 		}
-		
-		//Yahoo Sports Postseason (2002 - 2015) 
+
+		// Yahoo Sports Postseason (2002 - 2015)
 		startYear = 2002;
 		endYear = 2015;
 		String yahoo_url_post = "http://sports.yahoo.com/nba/stats/byteam?cat1=Total&cat2=team&sort=232&conference=NBA&year=postseason_2015";
@@ -222,12 +261,13 @@ public class NBAStatsCollectorApp {
 
 		for (int j = endYear; j >= startYear; j--) {
 			String year_url = yahoo_url_post.replaceAll("year=postseason_\\d\\d\\d\\d", "year=postseason_" + j);
-			//System.out.println(year_url);
-			
-			NBAPageSource yahoo_source_post = new NBAPageSource(year_url, j, true, yahoo_mapping_post, "tr[class^=ysprow]");
+			// System.out.println(year_url);
+
+			NBAPageSource yahoo_source_post = new NBAPageSource(year_url, j, true, yahoo_mapping_post,
+					"tr[class^=ysprow]");
 			list.add(yahoo_source_post);
 		}
-		
+
 		// Draft Express Players' Stats(1979-2016)
 		startYear = 1979;
 		endYear = 2016;
@@ -262,12 +302,13 @@ public class NBAStatsCollectorApp {
 		for (int i = endYear; i >= startYear; i--) {
 			String year_url = draftExpress_players_url.replaceAll("year=\\d\\d\\d\\d", "year=" + i);
 			// System.out.println(year_url);
-			NBAPageSource draftExpress_source = new NBAPageSource(year_url, i, false, draftExpress_players_mapping, "tr");
+			NBAPageSource draftExpress_source = new NBAPageSource(year_url, i, false, draftExpress_players_mapping,
+					"tr");
 			list.add(draftExpress_source);
 		}
 
 		System.out.println("Sources initialized.");
-		
+
 		return list;
 	}
 }
