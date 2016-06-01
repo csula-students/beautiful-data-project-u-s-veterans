@@ -100,6 +100,7 @@ public class BasketballObject {
 		c.set(Calendar.MILLISECOND, 0);
 		this.year_date = c.getTime();
 
+		NbaTeamLookup();
 		NbaCityLookup();
 	}
 
@@ -149,7 +150,214 @@ public class BasketballObject {
 		c.set(Calendar.MILLISECOND, 0);
 		this.year_date = c.getTime();
 
+		NbaTeamLookup();
 		NbaCityLookup();
+	}
+	
+	private void NbaTeamLookup() {
+//		String[] team_name = this.team.split(" ");
+//		String last_word = team_name[team_name.length - 1];
+		
+		String team_name = this.team;
+		
+		try {
+			switch (team_name) {
+			case "Golden State":
+				this.team = "Warriors";
+				break;
+			case "Golden State Warriors":
+				this.team = "Warriors";
+				break;
+			case "Golden St.":
+				this.team = "Warriors";
+				break;
+			case "Oklahoma City Thunder":
+				this.team = "Thunder";
+				break;
+			case "Oklahoma City":
+				this.team = "Thunder";
+				break;
+			case "Sacramento Kings":
+				this.team = "Kings";
+				break;
+			case "Sacramento":
+				this.team = "Kings";
+				break;
+			case "Houston Rockets":
+				this.team = "Rockets";
+				break;
+			case "Houston":
+				this.team = "Rockets";
+				break;
+			case "Boston Celtics":
+				this.team = "Celtics";
+				break;
+			case "Boston":
+				this.team = "Celtics";
+				break;
+			case "Portland Trail Blazers":
+				this.team = "Trailblazers";
+				break;
+			case "Portland":
+				this.team = "Trailblazers";
+				break;
+			case "Los Angeles Clippers":
+				this.team = "Clippers";
+				break;
+			case "LA Clippers":
+				this.team = "Clippers";
+				break;
+			case "L.A. Clippers":
+				this.team = "Clippers";
+				break;
+			case "Cleveland Cavaliers":
+				this.team = "Cavaliers";
+				break;
+			case "Cleveland":
+				this.team = "Cavaliers";
+				break;
+			case "Washington Wizards":
+				this.team = "Wizards";
+				break;
+			case "Washington":
+				this.team = "Wizards";
+				break;
+			case "San Antonio Spurs":
+				this.team = "Spurs";
+				break;
+			case "San Antonio":
+				this.team = "Spurs";
+				break;
+			case "Charlotte Hornets":
+				this.team = "Hornets";
+				break;
+			case "Charlotte":
+				this.team = "Hornets";
+				break;
+			case "Atlanta Hawks":
+				this.team = "Hawks";
+				break;
+			case "Atlanta":
+				this.team = "Hawks";
+				break;
+			case "Toronto Raptors":
+				this.team = "Raptors";
+				break;
+			case "Toronto":
+				this.team = "Raptors";
+				break;
+			case "New Orleans Pelicans":
+				this.team = "Pelicans";
+				break;
+			case "New Orleans":
+				this.team = "Pelicans";
+				break;
+			case "Minnesota Timberwolves":
+				this.team = "Timberwolves";
+				break;
+			case "Minnesota":
+				this.team = "Timberwolves";
+				break;
+			case "Dallas Mavericks":
+				this.team = "Mavericks";
+				break;
+			case "Dallas":
+				this.team = "Mavericks";
+				break;
+			case "Indiana Pacers":
+				this.team = "Pacers";
+				break;
+			case "Indiana":
+				this.team = "Pacers";
+				break;
+			case "Orlando Magic":
+				this.team = "Magic";
+				break;
+			case "Orlando":
+				this.team = "Magic";
+				break;
+			case "Detroit Pistons":
+				this.team = "Pistons";
+				break;
+			case "Detroit":
+				this.team = "Pistons";
+				break;
+			case "Denver Nuggets":
+				this.team = "Nuggets";
+				break;
+			case "Denver":
+				this.team = "Nuggets";
+				break;
+			case "Chicago Bulls":
+				this.team = "Bulls";
+				break;
+			case "Chicago":
+				this.team = "Bulls";
+				break;
+			case "Phoenix Suns":
+				this.team = "Suns";
+				break;
+			case "Phoenix":
+				this.team = "Suns";
+				break;
+			case "Miami Heat":
+				this.team = "Heat";
+				break;
+			case "Miami":
+				this.team = "Heat";
+				break;
+			case "Memphis Grizzlies":
+				this.team = "Grizzlies";
+				break;
+			case "Memphis":
+				this.team = "Grizzlies";
+				break;
+			case "Milwaukee Bucks":
+				this.team = "Bucks";
+				break;
+			case "Milwaukee":
+				this.team = "Bucks";
+				break;
+			case "Brooklyn Nets":
+				this.team = "Nets";
+				break;
+			case "Brooklyn":
+				this.team = "Nets";
+				break;
+			case "New York Knicks":
+				this.team = "Knicks";
+				break;
+			case "New York":
+				this.team = "Knicks";
+				break;
+			case "Utah Jazz":
+				this.team = "Jazz";
+				break;
+			case "Utah":
+				this.team = "Jazz";
+				break;
+			case "Philadelphia 76ers":
+				this.team = "76ers";
+				break;
+			case "Philadelphia":
+				this.team = "76ers";
+				break;
+			case "Los Angeles Lakers":
+				this.team = "Lakers";
+				break;
+			case "LA Lakers":
+				this.team = "Lakers";
+				break;
+			case "L.A. Lakers":
+				this.team = "Lakers";
+				break;
+			default:				
+				System.out.println("The team name is: '" + this.team + "'");
+				break;
+			}
+		} catch (Exception ex) {
+			System.out.println("Error finding match for: " + this.year.toString() + " " + this.team);
+		}
 	}
 
 	private void NbaCityLookup() {
