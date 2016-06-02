@@ -108,7 +108,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 			Double def_rebounds_percentage = 0.0;
 			Double total_rebounds_percentage = 0.0;
 			Double def_turnovers = 0.0;
-			String name = "";
+			String player_name = "";
 			Double minutes_played = 0.0;
 
 			for (Entry<Integer, String> stat : mapping.entrySet()) {
@@ -297,8 +297,8 @@ public class NBAPageSource implements Source<BasketballObject> {
 							//System.out.println("def_turnovers: " + def_turnovers);
 						}catch(Exception ex){}
 						break;
-					case NBAStatMapping.NAME:
-						name = tds.get(stat.getKey()).text();
+					case NBAStatMapping.PLAYER_NAME:
+						player_name = tds.get(stat.getKey()).text();
 						//System.out.println("name: " + name);
 						break;
 					case NBAStatMapping.MIN_PLAYED:
@@ -322,7 +322,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 
 			try {
 				
-				if (name.equalsIgnoreCase("")) {
+				if (player_name.equalsIgnoreCase("")) {
 					
 					BasketballObject newObj = new BasketballObject(team, year, postseason, games_played,
 							points_per_game, field_goal_made,
@@ -341,7 +341,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 					stats.add(newObj);
 				} else {
 					
-					BasketballObject newObj = new BasketballObject(name, team, year,
+					BasketballObject newObj = new BasketballObject(player_name, team, year,
 							postseason, games_played, minutes_played, points_per_game, 
 							field_goal_made, field_goal_attempted, field_goal_percentage,
 							two_pt_made, two_pt_attempted, two_pt_percentage,

@@ -36,7 +36,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 					boolean duplicate = false;
 					
 					for (BasketballObject cStat : clean) {
-						if (stat.getTeam().contentEquals(cStat.getTeam()) && stat.getName().contentEquals("")) {
+						if (stat.getTeam().contentEquals(cStat.getTeam()) && stat.getPlayer_name().contentEquals("")) {
 							duplicate = true;
 							break;
 						}
@@ -44,9 +44,9 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 					
 					if (!duplicate) {
 						
-						if (stat.getName() != null) {
+						if (stat.getPlayer_name() != null) {
 							
-							System.out.println(stat.getName() + " : " + stat.getTeam() + 
+							System.out.println(stat.getPlayer_name() + " : " + stat.getTeam() + 
 									" : " + stat.getPoints_per_game());								
 						} else {
 							
@@ -72,7 +72,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 						.append("year", item.getYear())
 						.append("year_date", item.getYearDate())
 						.append("postseason", item.getPostseason())
-						.append(NBAStatMapping.NAME, item.getName())
+						.append(NBAStatMapping.PLAYER_NAME, item.getPlayer_name())
 						.append(NBAStatMapping.MIN_PLAYED, item.getMinutes_played())
 						.append(NBAStatMapping.GAMES_PLAYED, item.getGames_played())
 						.append(NBAStatMapping.PTS_PER_GAME, item.getPoints_per_game())

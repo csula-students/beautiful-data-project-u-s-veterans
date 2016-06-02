@@ -38,7 +38,7 @@ public class BasketballObject {
 	private double defensive_rebounds_percentage;
 	private double total_rebounds_percentage;
 	private double def_turnovers;
-	private String name;
+	private String player_name;
 	private double minutes_played;
 	private Date year_date;
 	private String city;
@@ -104,7 +104,7 @@ public class BasketballObject {
 		NbaCityLookup();
 	}
 	
-	public BasketballObject(String name, String team, Integer year, boolean postseason, double games_played,
+	public BasketballObject(String player_name, String team, Integer year, boolean postseason, double games_played,
 			double minutes_played, double points_per_game, double field_goal_made, double field_goal_attempted,
 			double field_goal_percentage, double two_points_made, double two_points_attempted,
 			double two_points_percentage, double three_points_made, double three_points_attempted,
@@ -112,7 +112,7 @@ public class BasketballObject {
 			double free_throws_percentage, double offensive_rebounds, double defensive_rebounds, double total_rebounds,
 			double assists, double steals, double blocks, double turnovers, double fouls) {
 
-		this.name = name;
+		this.player_name = player_name;
 		this.team = team;
 		this.year = year;
 		this.postseason = postseason;
@@ -152,81 +152,6 @@ public class BasketballObject {
 
 		NbaTeamLookup();
 		NbaCityLookup();
-	}
-
-	public BasketballObject(
-			Integer year, 
-			String team, 
-			String name, 
-			boolean postseason, 
-			double games_played,
-			double minutes_played, 
-			double points_per_game, 
-			double def_points_per_game, 
-			double point_difference, 
-			double field_goal_made, 
-			double field_goal_attempted,
-			double field_goal_percentage, 
-			double def_field_goal_percentage,
-			double two_points_made, 
-			double two_points_attempted,
-			double two_points_percentage, 
-			double three_points_made, 
-			double three_points_attempted,
-			double three_points_percentage, 
-			double def_three_points_percentage, 
-			double free_throws_made, 
-			double free_throws_attempted,
-			double free_throws_percentage, 
-			double offensive_rebounds, 
-			double defensive_rebounds, 
-			double total_rebounds,
-			double offensive_rebounds_percentage, 
-			double defensive_rebounds_percentage,
-			double total_rebounds_percentage, 
-			double assists, 
-			double steals, 
-			double blocks, 
-			double turnovers,
-			double def_turnovers,
-			double fouls 
-			) {
-
-		this.year = year;
-		this.team = team;
-		this.name = name;
-		this.postseason = postseason;
-		this.games_played = games_played;
-		this.minutes_played = minutes_played;
-		this.points_per_game = points_per_game;
-		this.field_goal_made = field_goal_made;
-		this.field_goal_attempted = field_goal_attempted;
-		this.field_goal_percentage = field_goal_percentage;
-		this.two_points_made = two_points_made;
-		this.two_points_attempted = two_points_attempted;
-		this.two_points_percentage = two_points_percentage;
-		this.three_points_made = three_points_made;
-		this.three_points_attempted = three_points_attempted;
-		this.three_points_percentage = three_points_percentage;
-		this.free_throws_made = free_throws_made;
-		this.free_throws_attempted = free_throws_attempted;
-		this.free_throws_percentage = free_throws_percentage;
-		this.offensive_rebounds = offensive_rebounds;
-		this.defensive_rebounds = defensive_rebounds;
-		this.total_rebounds = total_rebounds;
-		this.offensive_rebounds_percentage = offensive_rebounds_percentage;
-		this.defensive_rebounds_percentage = defensive_rebounds_percentage;
-		this.total_rebounds_percentage = total_rebounds_percentage;
-		this.assists = assists;
-		this.steals = steals;
-		this.blocks = blocks;
-		this.turnovers = turnovers;
-		this.fouls = fouls;
-		this.def_points_per_game = def_points_per_game;
-		this.point_difference = point_difference;
-		this.def_field_goal_percentage = def_field_goal_percentage;
-		this.def_three_points_percentage = def_three_points_percentage;
-		this.def_turnovers = def_turnovers;
 	}
 	
 	private void NbaTeamLookup() {
@@ -851,12 +776,20 @@ public class BasketballObject {
 		return def_turnovers;
 	}
 
-	public String getName() {
-		return name;
+	public String getPlayer_name() {
+		return player_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPlayer_name(String player_name) {
+		this.player_name = player_name;
+	}
+
+	public Date getYear_date() {
+		return year_date;
+	}
+
+	public void setYear_date(Date year_date) {
+		this.year_date = year_date;
 	}
 
 	public double getMinutes_played() {
