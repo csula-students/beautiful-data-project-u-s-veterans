@@ -1,4 +1,4 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +38,7 @@ public class BasketballObject {
 	private double defensive_rebounds_percentage;
 	private double total_rebounds_percentage;
 	private double def_turnovers;
-	private String name;
+	private String player_name;
 	private double minutes_played;
 	private Date year_date;
 	private String city;
@@ -103,8 +103,8 @@ public class BasketballObject {
 		NbaTeamLookup();
 		NbaCityLookup();
 	}
-
-	public BasketballObject(String name, String team, Integer year, boolean postseason, double games_played,
+	
+	public BasketballObject(String player_name, String team, Integer year, boolean postseason, double games_played,
 			double minutes_played, double points_per_game, double field_goal_made, double field_goal_attempted,
 			double field_goal_percentage, double two_points_made, double two_points_attempted,
 			double two_points_percentage, double three_points_made, double three_points_attempted,
@@ -112,7 +112,7 @@ public class BasketballObject {
 			double free_throws_percentage, double offensive_rebounds, double defensive_rebounds, double total_rebounds,
 			double assists, double steals, double blocks, double turnovers, double fouls) {
 
-		this.name = name;
+		this.player_name = player_name;
 		this.team = team;
 		this.year = year;
 		this.postseason = postseason;
@@ -155,9 +155,7 @@ public class BasketballObject {
 	}
 	
 	private void NbaTeamLookup() {
-//		String[] team_name = this.team.split(" ");
-//		String last_word = team_name[team_name.length - 1];
-		
+
 		String team_name = this.team;
 		
 		try {
@@ -778,12 +776,20 @@ public class BasketballObject {
 		return def_turnovers;
 	}
 
-	public String getName() {
-		return name;
+	public String getPlayer_name() {
+		return player_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPlayer_name(String player_name) {
+		this.player_name = player_name;
+	}
+
+	public Date getYear_date() {
+		return year_date;
+	}
+
+	public void setYear_date(Date year_date) {
+		this.year_date = year_date;
 	}
 
 	public double getMinutes_played() {
@@ -809,5 +815,4 @@ public class BasketballObject {
 	public void setYearDate(Date year_date) {
 		this.year_date = year_date;
 	}
-
 }

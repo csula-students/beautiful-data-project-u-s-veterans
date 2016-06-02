@@ -1,8 +1,11 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.Collection;
 
 import com.google.common.collect.Lists;
+
+import edu.csula.datascience.nba.BasketballObject;
+import edu.csula.datascience.nba.Source;
 
 /**
  * A mock source to provide data

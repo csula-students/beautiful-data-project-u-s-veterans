@@ -1,4 +1,4 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.Collection;
 import java.util.Iterator;

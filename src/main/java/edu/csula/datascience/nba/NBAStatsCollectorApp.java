@@ -1,4 +1,4 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import java.util.Collection;
 import java.text.SimpleDateFormat;
@@ -273,7 +273,7 @@ public class NBAStatsCollectorApp extends TimerTask {
 		endYear = 2016;
 		String draftExpress_players_url = "http://www.draftexpress.com/stats.php?sort=&q=&league=NBA&year=2016&per=pergame&min=All&pos=all&qual=prospects";
 		NBAStatMapping draftExpress_players_mapping = new NBAStatMapping();
-		draftExpress_players_mapping.addMapping(1, NBAStatMapping.NAME);
+		draftExpress_players_mapping.addMapping(1, NBAStatMapping.PLAYER_NAME);
 		draftExpress_players_mapping.addMapping(2, NBAStatMapping.TEAM);
 		draftExpress_players_mapping.addMapping(3, NBAStatMapping.GAMES_PLAYED);
 		draftExpress_players_mapping.addMapping(4, NBAStatMapping.MIN_PLAYED);
