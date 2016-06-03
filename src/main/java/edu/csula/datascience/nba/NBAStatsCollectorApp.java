@@ -184,7 +184,9 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = yahoo_url.replaceAll("year=season_\\d\\d\\d\\d", "year=season_" + j);
 			// System.out.println(year_url);
 
-			NBAPageSource yahoo_source = new NBAPageSource(year_url, j, false, yahoo_mapping, "tr[class^=ysprow]");
+			// Need to increment by one because Yahoo uses 2015 rather than 2016
+			int standardizedYear = j + 1;
+			NBAPageSource yahoo_source = new NBAPageSource(year_url, standardizedYear, false, yahoo_mapping, "tr[class^=ysprow]");
 			list.add(yahoo_source);
 		}
 
