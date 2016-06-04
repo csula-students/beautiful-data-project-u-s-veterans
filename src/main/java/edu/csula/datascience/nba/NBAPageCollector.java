@@ -71,6 +71,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 						.append("city", item.getCity())
 						.append("year", item.getYear())
 						.append("year_date", item.getYearDate())
+						.append("player", item.getPlayer())
 						.append("postseason", item.getPostseason())
 						.append(NBAStatMapping.PLAYER_NAME, item.getPlayer_name())
 						.append(NBAStatMapping.MIN_PLAYED, item.getMinutes_played())
@@ -103,7 +104,9 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 						.append(NBAStatMapping.BLOCKS, item.getBlocks())
 						.append(NBAStatMapping.TURNOVERS, item.getTurnovers())
 						.append(NBAStatMapping.DEF_TURNOVERS, item.getDef_turnovers())
-						.append(NBAStatMapping.FOULS, item.getFouls()))
+						.append(NBAStatMapping.FOULS, item.getFouls())
+						.append("source", item.getSource())
+						)				
 				.collect(Collectors.toList());
 		collection.insertMany(documents);
 	}
