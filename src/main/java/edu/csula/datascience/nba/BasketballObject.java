@@ -7,6 +7,7 @@ public class BasketballObject {
 
 	private String team;
 	private Integer year;
+	private boolean player;
 	private boolean postseason;
 	private double games_played;
 	private double points_per_game;
@@ -42,11 +43,13 @@ public class BasketballObject {
 	private double minutes_played;
 	private Date year_date;
 	private String city;
+	private String source;
+	
 
 	public BasketballObject() {
 	}
 
-	public BasketballObject(String team, Integer year, boolean postseason, double games_played, double points_per_game,
+	public BasketballObject(String team, Integer year, boolean player, boolean postseason, double games_played, double points_per_game,
 			double field_goal_made, double field_goal_attempted, double field_goal_percentage, double two_points_made,
 			double two_points_attempted, double two_points_percentage, double three_points_made,
 			double three_points_attempted, double three_points_percentage, double free_throws_made,
@@ -54,10 +57,11 @@ public class BasketballObject {
 			double defensive_rebounds, double total_rebounds, double assists, double steals, double blocks,
 			double turnovers, double fouls, double def_points_per_game, double point_difference,
 			double def_field_goal_percentage, double def_three_points_percentage, double offensive_rebounds_percentage,
-			double defensive_rebounds_percentage, double total_rebounds_percentage, double def_turnovers) {
+			double defensive_rebounds_percentage, double total_rebounds_percentage, double def_turnovers, String source) {
 
 		this.team = team;
 		this.year = year;
+		this.player = player;
 		this.postseason = postseason;
 		this.games_played = games_played;
 		this.points_per_game = points_per_game;
@@ -89,6 +93,7 @@ public class BasketballObject {
 		this.defensive_rebounds_percentage = defensive_rebounds_percentage;
 		this.total_rebounds_percentage = total_rebounds_percentage;
 		this.def_turnovers = def_turnovers;
+		this.source = source;
 
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, this.year);
@@ -104,14 +109,15 @@ public class BasketballObject {
 		NbaCityLookup();
 	}
 	
-	public BasketballObject(String player_name, String team, Integer year, boolean postseason, double games_played,
+	public BasketballObject(boolean player, String player_name, String team, Integer year, boolean postseason, double games_played,
 			double minutes_played, double points_per_game, double field_goal_made, double field_goal_attempted,
 			double field_goal_percentage, double two_points_made, double two_points_attempted,
 			double two_points_percentage, double three_points_made, double three_points_attempted,
 			double three_points_percentage, double free_throws_made, double free_throws_attempted,
 			double free_throws_percentage, double offensive_rebounds, double defensive_rebounds, double total_rebounds,
-			double assists, double steals, double blocks, double turnovers, double fouls) {
+			double assists, double steals, double blocks, double turnovers, double fouls, String source) {
 
+		this.player = player;
 		this.player_name = player_name;
 		this.team = team;
 		this.year = year;
@@ -139,6 +145,7 @@ public class BasketballObject {
 		this.blocks = blocks;
 		this.turnovers = turnovers;
 		this.fouls = fouls;
+		this.source = source;
 
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, this.year);
@@ -349,8 +356,8 @@ public class BasketballObject {
 			case "L.A. Lakers":
 				this.team = "Lakers";
 				break;
-			default:				
-				System.out.println("The team name is: '" + this.team + "'");
+			default:
+				// Do nothing
 				break;
 			}
 		} catch (Exception ex) {
@@ -364,6 +371,7 @@ public class BasketballObject {
 		try {
 			switch (last_word) {
 			case "Warriors":
+			case "Golden State Warriors":	
 				this.city = "Oakland";
 				break;
 
@@ -490,6 +498,7 @@ public class BasketballObject {
 			default:				
 				switch(this.team){
 				case "Golden State":
+				case "Golden St.":	
 					this.city = "Oakland";
 					break;
 					
@@ -526,6 +535,14 @@ public class BasketballObject {
 
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+	
+	public boolean getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(boolean player) {
+		this.player = player;
 	}
 
 	public boolean getPostseason() {
@@ -815,4 +832,12 @@ public class BasketballObject {
 	public void setYearDate(Date year_date) {
 		this.year_date = year_date;
 	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}	
 }
