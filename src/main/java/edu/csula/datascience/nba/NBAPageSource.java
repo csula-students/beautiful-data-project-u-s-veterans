@@ -22,18 +22,18 @@ public class NBAPageSource implements Source<BasketballObject> {
 	private Document doc;
 	private Elements rows;
 	private boolean rows_returned;
-	private String source;
+	private String website;
 	private String selector;
 
 	// Mapping should not be modified once passed to source object
 	NBAPageSource(String url, Integer year, boolean player, boolean postseason, 
-			NBAStatMapping mapping, String source, String selector) {
+			NBAStatMapping mapping, String website, String selector) {
 		this.url = url;
 		this.year = year;
 		this.player = player;
 		this.postseason = postseason;
 		this.mapping = mapping;
-		this.source = source;
+		this.website = website;
 		this.selector = selector;		
 
 		// Sets flag for hasNext()
@@ -63,11 +63,11 @@ public class NBAPageSource implements Source<BasketballObject> {
 	public boolean getPostseason() {
 		return postseason;
 	}
-	
-	public String getSource() {
-		return source;
+		
+	public String getWebsite() {
+		return website;
 	}
-	
+
 	public String getSelector() {
 		return selector;
 	}
@@ -119,7 +119,6 @@ public class NBAPageSource implements Source<BasketballObject> {
 			Double def_turnovers = 0.0;
 			String player_name = "";
 			Double minutes_played = 0.0;
-			String source = "";
 
 			for (Entry<Integer, String> stat : mapping.entrySet()) {
 				try {
@@ -348,7 +347,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 							def_points_per_game, point_difference,
 							def_field_goal_percentage, def_three_points_percentage,
 							off_rebounds_percentage, def_rebounds_percentage, 
-							total_rebounds_percentage, def_turnovers, source);
+							total_rebounds_percentage, def_turnovers, website);
 					stats.add(newObj);
 				} else {
 					
@@ -359,7 +358,7 @@ public class NBAPageSource implements Source<BasketballObject> {
 							three_points_made, three_points_attempted, three_points_percentage,
 							free_throws_made, free_throws_attempted, free_throws_percentage,
 							off_rebounds, def_rebounds, total_rebounds, 
-							assists, steals, blocks, turnovers, fouls, source);
+							assists, steals, blocks, turnovers, fouls, website);
 					
 					stats.add(newObj);
 				}
