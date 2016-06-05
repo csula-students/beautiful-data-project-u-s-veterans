@@ -97,6 +97,7 @@ public class NBAElasticSearch {
                     		Integer.valueOf(record.get("year")),
                     		record.get("team"),
                     		record.get("city"),
+                    		Boolean.valueOf(record.get("player")),
                     		record.get("player_name"),
                     		Boolean.valueOf(record.get("postseason")),
                     		Double.valueOf(record.get("games_played")),
@@ -129,7 +130,8 @@ public class NBAElasticSearch {
                     		Double.valueOf(record.get("blocks")), 
                     		Double.valueOf(record.get("turnovers")),
                     		Double.valueOf(record.get("def_turnovers")),
-                    		Double.valueOf(record.get("fouls")) 
+                    		Double.valueOf(record.get("fouls")),
+                    		record.get("website")
                     );
 
                     bulkProcessor.add(new IndexRequest(indexName, typeName)
@@ -167,6 +169,7 @@ public class NBAElasticSearch {
 		final Integer year; 
 		final String team;
 		final String city;
+		final boolean player;
 		final String player_name; 
 		final boolean postseason; 
 		final double games_played;
@@ -200,6 +203,7 @@ public class NBAElasticSearch {
 		final double turnovers;
 		final double def_turnovers;
 		final double fouls;
+		final String website;
 		
 		public Basketball(
 				
@@ -207,6 +211,7 @@ public class NBAElasticSearch {
 				Integer year, 
 				String team,
 				String city,
+				boolean player,
 				String player_name, 
 				boolean postseason, 
 				double games_played,
@@ -239,13 +244,15 @@ public class NBAElasticSearch {
 				double blocks, 
 				double turnovers,
 				double def_turnovers,
-				double fouls 
+				double fouls,
+				String website
 				) {
 
 			this.year_date = year_date;
 			this.year = year;
 			this.team = team;
 			this.city = city;
+			this.player = player;
 			this.player_name = player_name;
 			this.postseason = postseason;
 			this.games_played = games_played;
@@ -279,6 +286,7 @@ public class NBAElasticSearch {
 			this.def_field_goal_percentage = def_field_goal_percentage;
 			this.def_three_points_percentage = def_three_points_percentage;
 			this.def_turnovers = def_turnovers;
+			this.website = website;
 		}
 
 		public String getYear_date() {
@@ -428,6 +436,13 @@ public class NBAElasticSearch {
 		public double getFouls() {
 			return fouls;
 		}
-		
+
+		public boolean isPlayer() {
+			return player;
+		}
+
+		public String getWebsite() {
+			return website;
+		}	
 	}
 }
