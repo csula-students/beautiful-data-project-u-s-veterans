@@ -43,7 +43,7 @@ public class BasketballObject {
 	private double minutes_played;
 	private Date year_date;
 	private String city;
-	private String source;
+	private String website;
 	
 
 	public BasketballObject() {
@@ -57,7 +57,7 @@ public class BasketballObject {
 			double defensive_rebounds, double total_rebounds, double assists, double steals, double blocks,
 			double turnovers, double fouls, double def_points_per_game, double point_difference,
 			double def_field_goal_percentage, double def_three_points_percentage, double offensive_rebounds_percentage,
-			double defensive_rebounds_percentage, double total_rebounds_percentage, double def_turnovers, String source) {
+			double defensive_rebounds_percentage, double total_rebounds_percentage, double def_turnovers, String website) {
 
 		this.team = team;
 		this.year = year;
@@ -93,7 +93,7 @@ public class BasketballObject {
 		this.defensive_rebounds_percentage = defensive_rebounds_percentage;
 		this.total_rebounds_percentage = total_rebounds_percentage;
 		this.def_turnovers = def_turnovers;
-		this.source = source;
+		this.website = website;
 
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, this.year);
@@ -115,7 +115,7 @@ public class BasketballObject {
 			double two_points_percentage, double three_points_made, double three_points_attempted,
 			double three_points_percentage, double free_throws_made, double free_throws_attempted,
 			double free_throws_percentage, double offensive_rebounds, double defensive_rebounds, double total_rebounds,
-			double assists, double steals, double blocks, double turnovers, double fouls, String source) {
+			double assists, double steals, double blocks, double turnovers, double fouls, String website) {
 
 		this.player = player;
 		this.player_name = player_name;
@@ -145,7 +145,7 @@ public class BasketballObject {
 		this.blocks = blocks;
 		this.turnovers = turnovers;
 		this.fouls = fouls;
-		this.source = source;
+		this.website = website;
 
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, this.year);
@@ -833,11 +833,11 @@ public class BasketballObject {
 		this.year_date = year_date;
 	}
 
-	public String getSource() {
-		return source;
+	public String getWebsite() {
+		return website;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
-	}	
+	public void setWebsite(String website) {
+		this.website = website;
+	}
 }

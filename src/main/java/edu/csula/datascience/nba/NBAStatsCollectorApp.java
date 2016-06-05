@@ -74,7 +74,7 @@ public class NBAStatsCollectorApp extends TimerTask {
 
 		// CBS Sports
 		String cbs_url = "http://www.cbssports.com/nba/stats/teamsort/NBA/year-2015-season-regularseason-category-scoringpergame-type-team";
-		String source = "CBS Sports";
+		String website = "CBS Sports";
 		Integer cbs_year = 2016;
 		NBAStatMapping cbs_mapping = new NBAStatMapping();
 		cbs_mapping.addMapping(0, NBAStatMapping.TEAM);
@@ -90,13 +90,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 		cbs_mapping.addMapping(10, NBAStatMapping.FT_ATTEMPTED);
 		cbs_mapping.addMapping(11, NBAStatMapping.FT_PERCENTAGE);
 		NBAPageSource cbssports_source = new NBAPageSource(cbs_url, cbs_year, 
-				false, false, cbs_mapping, source, "tr");
+				false, false, cbs_mapping, website, "tr");
 
 		list.add(cbssports_source);
 
 		// Draft Express (1979-2016)
 		String draftExpress_url = "http://www.draftexpress.com/teamstats.php?league=NBA&year=2016&per=game";
-		source = "Draft Express";
+		website = "Draft Express";
 		Integer startYear = 1979;
 		Integer endYear = 2016;
 		NBAStatMapping draftExpress_mapping = new NBAStatMapping();
@@ -128,13 +128,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = draftExpress_url.replaceAll("year=\\d\\d\\d\\d", "year=" + i);
 			// System.out.println(year_url);
 			NBAPageSource de_source = new NBAPageSource(year_url, i, false, false, 
-					draftExpress_mapping, source, "tr");
+					draftExpress_mapping, website, "tr");
 			list.add(de_source);
 		}
 
 		// ESPN (1999 - 2016)
 		String espn_url = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2016/seasontype/2";
-		source = "ESPN";
+		website = "ESPN";
 		startYear = 1999;
 		endYear = 2016;		
 		NBAStatMapping espn_mapping = new NBAStatMapping();
@@ -157,13 +157,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = espn_url.replaceAll("year/\\d\\d\\d\\d", "year/" + i);
 			// System.out.println(year_url);
 			NBAPageSource espn_source = new NBAPageSource(year_url, i, false, false, 
-					espn_mapping, source, "tr");
+					espn_mapping, website, "tr");
 			list.add(espn_source);
 		}
 
 		// Yahoo Sports (2002 - 2015)
 		String yahoo_url = "http://sports.yahoo.com/nba/stats/byteam?cat1=Total&cat2=team&sort=232&conference=NBA&year=season_2015";
-		source = "Yahoo Sports";
+		website = "Yahoo Sports";
 		startYear = 2002;
 		endYear = 2015;
 		NBAStatMapping yahoo_mapping = new NBAStatMapping();
@@ -194,13 +194,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 			// Need to increment by one because Yahoo uses 2015 rather than 2016
 			int standardizedYear = j + 1;
 			NBAPageSource yahoo_source = new NBAPageSource(year_url, standardizedYear, false, 
-					false, yahoo_mapping, source, "tr[class^=ysprow]");
+					false, yahoo_mapping, website, "tr[class^=ysprow]");
 			list.add(yahoo_source);
 		}
 
 		// CBS Sports Postseason
 		String cbs_url_post = "http://www.cbssports.com/nba/stats/teamsort/NBA/year-2015-season-postseason-category-scoringpergame-type-team";
-		source = "CBS Sports";
+		website = "CBS Sports";
 		NBAStatMapping cbs_mapping_post = new NBAStatMapping();
 		cbs_mapping_post.addMapping(0, NBAStatMapping.TEAM);
 		cbs_mapping_post.addMapping(1, NBAStatMapping.GAMES_PLAYED);
@@ -215,13 +215,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 		cbs_mapping_post.addMapping(10, NBAStatMapping.FT_ATTEMPTED);
 		cbs_mapping_post.addMapping(11, NBAStatMapping.FT_PERCENTAGE);
 		NBAPageSource cbssports_source_post = new NBAPageSource(cbs_url_post, cbs_year, 
-				false, true, cbs_mapping_post, source, "tr");
+				false, true, cbs_mapping_post, website, "tr");
 
 		list.add(cbssports_source_post);
 
 		// ESPN Postseason (1999 - 2016)
 		String espn_url_post = "http://espn.go.com/nba/statistics/team/_/stat/team-comparison-per-game/sort/avgPoints/year/2016";
-		source = "ESPN";
+		website = "ESPN";
 		startYear = 2000;
 		endYear = 2016;
 		NBAStatMapping espn_mapping_post = new NBAStatMapping();
@@ -244,13 +244,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = espn_url_post.replaceAll("year/\\d\\d\\d\\d", "year/" + i);
 			// System.out.println(year_url);
 			NBAPageSource espn_source_post = new NBAPageSource(year_url, i, false, true, 
-					espn_mapping_post, source, "tr");
+					espn_mapping_post, website, "tr");
 			list.add(espn_source_post);
 		}
 
 		// Yahoo Sports Postseason (2002 - 2015)
 		String yahoo_url_post = "http://sports.yahoo.com/nba/stats/byteam?cat1=Total&cat2=team&sort=232&conference=NBA&year=postseason_2015";
-		source = "Yahoo Sports";
+		website = "Yahoo Sports";
 		startYear = 2002;
 		endYear = 2015;
 		NBAStatMapping yahoo_mapping_post = new NBAStatMapping();
@@ -278,13 +278,13 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = yahoo_url_post.replaceAll("year=postseason_\\d\\d\\d\\d", "year=postseason_" + j);
 			// System.out.println(year_url);
 			NBAPageSource yahoo_source_post = new NBAPageSource(year_url, j, false, true, 
-					yahoo_mapping_post, source, "tr[class^=ysprow]");
+					yahoo_mapping_post, website, "tr[class^=ysprow]");
 			list.add(yahoo_source_post);
 		}
 
 		// Draft Express Players' Stats(1979-2016)
 		String draftExpress_players_url = "http://www.draftexpress.com/stats.php?sort=&q=&league=NBA&year=2016&per=pergame&min=All&pos=all&qual=prospects";
-		source = "Draft Express";
+		website = "Draft Express";
 		startYear = 1979;
 		endYear = 2016;
 		NBAStatMapping draftExpress_players_mapping = new NBAStatMapping();
@@ -318,7 +318,7 @@ public class NBAStatsCollectorApp extends TimerTask {
 			String year_url = draftExpress_players_url.replaceAll("year=\\d\\d\\d\\d", "year=" + i);
 			// System.out.println(year_url);
 			NBAPageSource draftExpress_source = new NBAPageSource(year_url, i, true, false, 
-					draftExpress_players_mapping, source, "tr");
+					draftExpress_players_mapping, website, "tr");
 			list.add(draftExpress_source);
 		}
 

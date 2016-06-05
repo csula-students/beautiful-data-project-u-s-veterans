@@ -105,7 +105,7 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 						.append(NBAStatMapping.TURNOVERS, item.getTurnovers())
 						.append(NBAStatMapping.DEF_TURNOVERS, item.getDef_turnovers())
 						.append(NBAStatMapping.FOULS, item.getFouls())
-						.append("source", item.getSource())
+						.append("website", item.getWebsite())
 						)				
 				.collect(Collectors.toList());
 		collection.insertMany(documents);
