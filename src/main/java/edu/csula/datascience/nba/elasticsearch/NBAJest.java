@@ -1,99 +1,69 @@
 package edu.csula.datascience.nba.elasticsearch;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.elasticsearch.action.bulk.BackoffPolicy;
-import org.elasticsearch.action.bulk.BulkProcessor;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.unit.ByteSizeUnit;
-import org.elasticsearch.common.unit.ByteSizeValue;
-import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.Collection;
 
-import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+import com.google.common.collect.Lists;
+import io.searchbox.action.BulkableAction;
+import io.searchbox.client.JestClient;
+import io.searchbox.client.JestClientFactory;
+import io.searchbox.client.config.HttpClientConfig;
+import io.searchbox.core.Bulk;
+import io.searchbox.core.Index;
 
 /**
- * A quick elastic search example app
- *
- * It will parse the csv file from the resource folder under main and send these
- * data to elastic search instance running locally
- *
- * After that we will be using elastic search to do full text search
- *
- * gradle command to run this app 'gradle esNbaStats'
+ * A quick example app to send data to elastic search on AWS
  */
-public class NBAElasticSearch {
-
-	private final static String indexName = "datascience";
-	private final static String typeName = "nbastats";
+public class NBAJest {
 
 	public static void main(String[] args) throws URISyntaxException, IOException {
-
-		Node node = nodeBuilder()
-				.settings(Settings.builder().put("cluster.name", "ares").put("path.home", "elasticsearch-data")).node();
-
-		Client client = node.client();
-
+		
+		String indexName = "datascience";
+        
+		String typeName = "nbastats";
+		
+		String awsAddress = "http://search-big-data-nba-ukyi4kqstyyxx3qcihtdysgg24.us-west-2.es.amazonaws.com/";
+		
+		JestClientFactory factory = new JestClientFactory();
+		
+		factory.setHttpClientConfig(new HttpClientConfig
+	            .Builder(awsAddress)
+	            .multiThreaded(true)
+	            .build());
+		
+		JestClient client = factory.getObject();
+		
 		// as usual process to connect to data source, we will need to set up
-		// node and client
-		// to read CSV file from the resource folder
-		File csv = new File(ClassLoader.getSystemResource("nbastats.csv").toURI());
-
-		// create bulk processor
-		BulkProcessor bulkProcessor = BulkProcessor.builder(client, new BulkProcessor.Listener() {
-
-			@Override
-			public void beforeBulk(long executionId, BulkRequest request) {
-			}
-
-			@Override
-			public void afterBulk(long executionId, BulkRequest request, BulkResponse response) {
-			}
-
-			@Override
-			public void afterBulk(long executionId, BulkRequest request, Throwable failure) {
-				System.out.println("Facing error while importing data to elastic search");
-				failure.printStackTrace();
-			}
-		}).setBulkActions(10000).setBulkSize(new ByteSizeValue(1, ByteSizeUnit.GB))
-				.setFlushInterval(TimeValue.timeValueSeconds(5)).setConcurrentRequests(1)
-				.setBackoffPolicy(BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3)).build();
-
-		// Gson library for sending json to elastic search
-		Gson gson = new Gson();
+        // node and client// to read CSV file from the resource folder
+        File csv = new File(ClassLoader.getSystemResource("nbastats.csv").toURI());
 		
         try {
             // after reading the csv file, we will use CSVParser to parse through
             // the csv files
-            CSVParser parser = CSVParser.parse(
-                csv,
+            CSVParser parser = CSVParser.parse(csv,
                 Charset.defaultCharset(),
                 CSVFormat.EXCEL.withHeader()
             );
+            
+            Collection<Basketball> teamStats = Lists.newArrayList();
+
+            int count = 0;
 
             // for each record, we will insert data into Elastic Search
-            parser.forEach(record -> {
+            for (CSVRecord record: parser) {
                 // cleaning up dirty data which doesn't have date or team
                 if (
                     !record.get("year_date").isEmpty() &&
-                    !record.get("team").isEmpty() 
+                    !record.get("team").isEmpty()
                 ) {
-                    
+                	
                 	Basketball temp = new Basketball(
                     		record.get("year_date"),
                     		Integer.valueOf(record.get("year")),
@@ -136,35 +106,64 @@ public class NBAElasticSearch {
                     		record.get("website")
                     );
 
-                    bulkProcessor.add(new IndexRequest(indexName, typeName)
-                        .source(gson.toJson(temp))
-                    );
+                    if (count < 500) {
+                    	
+                    	teamStats.add(temp);         
+                    	count ++;
+                    	
+                    } else {
+                    	
+                        try {
+                            
+                        	@SuppressWarnings("rawtypes")
+							Collection<BulkableAction> actions = Lists.newArrayList();
+                            
+                            teamStats.stream()
+                                .forEach(tmp -> {
+                                    actions.add(new Index.Builder(tmp).build());
+                                });
+                            
+                            Bulk.Builder bulk = new Bulk.Builder()
+                                .defaultIndex(indexName)
+                                .defaultType(typeName)
+                                .addAction(actions);
+                            
+                            client.execute(bulk.build());
+                            
+                            count = 0;
+                            
+                            teamStats = Lists.newArrayList();
+                            
+                            System.out.println("Inserted 500 documents to cloud");
+                        
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            });
+            }
+
+            @SuppressWarnings("rawtypes")
+			Collection<BulkableAction> actions = Lists.newArrayList();
+            
+            teamStats.stream()
+                .forEach(tmp -> {
+                    actions.add(new Index.Builder(tmp).build());
+                });
+            
+            Bulk.Builder bulk = new Bulk.Builder()
+                .defaultIndex(indexName)
+                .defaultType(typeName)
+                .addAction(actions);
+            client.execute(bulk.build());
+        
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("We are done! Yay!");
+    }
         
-        /**
-         * AGGREGATION
-         */
-        SearchResponse sr = node.client().prepareSearch(indexName)
-            .setTypes(typeName)
-            .setQuery(QueryBuilders.matchAllQuery())
-            .addAggregation(AggregationBuilders.terms("stateAgg").field("state")
-                    .size(Integer.MAX_VALUE)
-            )
-            .execute().actionGet();
-        
-        // Get your facet results
-        Terms agg1 = sr.getAggregations().get("stateAgg");
-        
-        for (Terms.Bucket bucket: agg1.getBuckets()) {
-            
-        	System.out.println(bucket.getKey() + ": " + bucket.getDocCount());
-        }
-	}
-	
 	static class Basketball {
 		
 		final String year_date;
