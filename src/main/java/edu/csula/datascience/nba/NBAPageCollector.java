@@ -1,4 +1,4 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -21,10 +21,12 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 		database = mongoClient.getDatabase("datascience");
 
 		collection = database.getCollection("nbastats");
+		collection.drop();
 	}
 
 	@Override
 	public Collection<BasketballObject> mungee(Collection<BasketballObject> src) {
+		
 		Collection<BasketballObject> clean = new ArrayList<BasketballObject>();
 
 		for (BasketballObject stat : src) {
@@ -34,14 +36,24 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 					boolean duplicate = false;
 					
 					for (BasketballObject cStat : clean) {
-						if (stat.getTeam().contentEquals(cStat.getTeam())) {
+						if (stat.getTeam().contentEquals(cStat.getTeam()) && stat.getPlayer_name().contentEquals("")) {
 							duplicate = true;
 							break;
 						}
 					}
 					
 					if (!duplicate) {
-						System.out.println(stat.getTeam() + ": " + stat.getPoints_per_game());
+						
+						if (stat.getPlayer_name() != null) {
+							
+							System.out.println(stat.getPlayer_name() + " : " + stat.getTeam() + 
+									" : " + stat.getPoints_per_game());								
+						} else {
+							
+							System.out.println(stat.getTeam() + " : " + 
+									stat.getPoints_per_game());
+						}
+												
 						clean.add(stat);
 					}
 				}
@@ -55,7 +67,14 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 	@Override
 	public void save(Collection<BasketballObject> data) {
 		List<Document> documents = data.stream()
-				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam()).append("year", item.getYear())
+				.map(item -> new Document().append(NBAStatMapping.TEAM, item.getTeam())
+						.append("city", item.getCity())
+						.append("year", item.getYear())
+						.append("year_date", item.getYearDate())
+						.append("player", item.getPlayer())
+						.append("postseason", item.getPostseason())
+						.append(NBAStatMapping.PLAYER_NAME, item.getPlayer_name())
+						.append(NBAStatMapping.MIN_PLAYED, item.getMinutes_played())
 						.append(NBAStatMapping.GAMES_PLAYED, item.getGames_played())
 						.append(NBAStatMapping.PTS_PER_GAME, item.getPoints_per_game())
 						.append(NBAStatMapping.DEF_PTS_PER_GAME, item.getDef_points_per_game())
@@ -77,11 +96,17 @@ public class NBAPageCollector implements Collector<BasketballObject, BasketballO
 						.append(NBAStatMapping.OFF_REBOUNDS, item.getOffensive_rebounds())
 						.append(NBAStatMapping.DEF_REBOUNDS, item.getDefensive_rebounds())
 						.append(NBAStatMapping.TOTAL_REBOUNDS, item.getTotal_rebounds())
+						.append(NBAStatMapping.OFF_REBOUNDS_PERCENTAGE, item.getOffensive_rebounds_percentage())
+						.append(NBAStatMapping.DEF_REBOUNDS_PERCENTAGE, item.getDefensive_rebounds_percentage())
+						.append(NBAStatMapping.TOTAL_REBOUNDS_PERCENTAGE, item.getTotal_rebounds_percentage())
 						.append(NBAStatMapping.ASSISTS, item.getAssists())
-						.append(NBAStatMapping.STEALS, item.getSteals()).append(NBAStatMapping.BLOCKS, item.getBlocks())
+						.append(NBAStatMapping.STEALS, item.getSteals())
+						.append(NBAStatMapping.BLOCKS, item.getBlocks())
 						.append(NBAStatMapping.TURNOVERS, item.getTurnovers())
 						.append(NBAStatMapping.DEF_TURNOVERS, item.getDef_turnovers())
-						.append(NBAStatMapping.FOULS, item.getFouls()))
+						.append(NBAStatMapping.FOULS, item.getFouls())
+						.append("website", item.getWebsite())
+						)				
 				.collect(Collectors.toList());
 		collection.insertMany(documents);
 	}

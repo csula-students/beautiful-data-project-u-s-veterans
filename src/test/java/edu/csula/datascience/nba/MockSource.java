@@ -1,9 +1,11 @@
-package edu.csula.datascience.jsouptest;
+package edu.csula.datascience.nba;
+
+import java.util.Collection;
 
 import com.google.common.collect.Lists;
 
-import java.util.Collection;
-import java.util.function.Consumer;
+import edu.csula.datascience.nba.BasketballObject;
+import edu.csula.datascience.nba.Source;
 
 /**
  * A mock source to provide data
@@ -20,42 +22,42 @@ public class MockSource implements Source<BasketballObject> {
     public Collection<BasketballObject> next() {
         return Lists.newArrayList(
             new BasketballObject(),
-            new BasketballObject("Golden St", 2016, 82,
+            new BasketballObject("Golden St", 2016, false, false, 82,
             103.4, 0.0,
             0.0,0.0,0.0,
             0.0,0.0,0.0,
-            0.0,0.0
+            0.0,0.0,
             0.0,0.0,
             0.0,0.0,
             0.0,0.0,
             0.0,0.0,0.0,
             0.0,0.0,0.0,
             0.0,0.0,
-            0.0,0.0,0.0),
-            new BasketballObject("Golden St", 2016, 82, 
+            0.0,0.0,0.0,0.0,0.0,""),
+            new BasketballObject("Golden St", 2016, false, false, 82, 
                 103.4, 0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
-                0.0,0.0
+                0.0,0.0,0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,
-                0.0,0.0,0.0),
-            new BasketballObject("Miami", 2016, 82,
+                0.0,0.0,0.0,""),
+            new BasketballObject("Miami", 2016, false, false, 82,
                 101.4, 0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
-                0.0,0.0
+                0.0,0.0,0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,0.0,
                 0.0,0.0,
-                0.0,0.0,0.0)
+                0.0,0.0,0.0,"")
         );
     }
 }
