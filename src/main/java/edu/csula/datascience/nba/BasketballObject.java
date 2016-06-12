@@ -45,7 +45,6 @@ public class BasketballObject {
 	private String city;
 	private String website;
 	
-
 	public BasketballObject() {
 	}
 
